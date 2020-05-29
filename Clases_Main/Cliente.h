@@ -5,13 +5,13 @@
 #include <string>
 using namespace std;
 
-class Cliente{
+class Cliente{ // Creamos la cuenta cliente 
   private:
     string nombre;
     int edad;
   public:
-    Cliente();
-    Cliente(string, int);
+    Cliente(); // Constructor default
+    Cliente(string, int); // Constructor con sobrecarga
     void setNombre(string);
     void setEdad(int);
     string getNombre();
