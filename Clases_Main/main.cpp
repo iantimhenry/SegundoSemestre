@@ -1,5 +1,10 @@
+/*
+Ian Timothy Henry Suárez
+A01701578
+*/
+
 #include <iostream>
-#include<string>
+#include <string>
 using namespace std;
 
 #include "Cliente.h"
@@ -8,18 +13,17 @@ using namespace std;
 
 int main(){
 
-  Cuenta c("Javier", 34, , 10000, 00001);
-  CuentaAhorro ca("Natalia", 27, 15000, 00002, 0.05, 5000);
-  CuentaCredito cc("Gustavo", 40, 30000, 00003, 10000);
+  BaseDeDatos bd;
 
-  BaseDeDatos bd();
-
-  bd.agregaCuenta(c);
-  bd.agregaCuenta(ca);
-  bd.agregaCuenta(cc);
+  bd.cuentas[0] = new Cuenta("Javier", 10000, 00001);
+  bd.cuentas[1] = new CuentaAhorro("Natalia", 15000, 00002, 0.05, 5000);
+  bd.cuentas[3] = new CuentaCredito("Gustavo", 30000, 00003, 10000);
   
-  bd.mostrarLista();
+  //bd.mostrarLista();
 
-  
-  return 0
+  for (int i=0; i<10; i++){
+    cout << bd.cuentas[i] -> mostrarCuenta();
+  }
+
+  return 0;
 }

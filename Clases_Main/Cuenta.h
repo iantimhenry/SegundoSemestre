@@ -14,7 +14,8 @@ class Cuenta{ // Creamos la clase padre (Cuenta)
     int noCuenta;
   public:
     Cuenta(); // Constructor default
-    Cuenta(string, int, float, int); // Constructor con sobre carga
+    Cuenta(string, float, int); // Constructor con sobre carga
+    virtual void mostrarCuenta(); // Método vitrtual, para polimorfismo
     virtual void retirar(float); // Método vitrtual, para polimorfismo
     void depositar(float);
     void setNoCuenta(int);
@@ -25,9 +26,15 @@ class Cuenta{ // Creamos la clase padre (Cuenta)
 Cuenta::Cuenta(){
 }
 
-Cuenta::Cuenta(string _nombre, int _edad, float _saldo, int _noCuenta) : Cliente(_nombre, _edad){ // Nombre y edad pertenecen a la clase cliente
+Cuenta::Cuenta(string _nombre, float _saldo, int _noCuenta) : cliente(_nombre){ // El nombre pertenece al objeto cliente de clase Cliente
   saldo = _saldo;
   noCuenta = _noCuenta;
+}
+
+void Cuenta::mostrarCuenta(){
+  cout << "Cliente: " << cliente.getNombre() << endl;
+  cout << "Saldo: " << saldo << endl;
+  cout << "Número de cuenta: " << noCuenta << endl;
 }
 
 void Cuenta::retirar(float cantidad){
@@ -52,7 +59,8 @@ class CuentaAhorro : public Cuenta{ // Creamos una clase hija (CuentaAhorro)
     float saldoMinimo;
   public:
     CuentaAhorro(); // Constructor default
-    CuentaAhorro(string, int, float, int, float, float); // Constructor con sobre carga
+    CuentaAhorro(string, float, int, float, float); // Constructor con sobre carga
+    void mostrarCuenta(); // Sobreescritura
     void retirar(float); // Sobreescritura
     void setInteres(float);
     void setSaldoMinimo(float);
@@ -63,9 +71,17 @@ class CuentaAhorro : public Cuenta{ // Creamos una clase hija (CuentaAhorro)
 CuentaAhorro::CuentaAhorro(){
 }
 
-CuentaAhorro::CuentaAhorro(string _nombre, int _edad, float _saldo, int _noCuenta, float _interes, float _saldoMinimo) : Cuenta(_nombre, _edad, _saldo, _noCuenta){ // Heredamos el nombre, edad, saldo y número de cuenta de la clase padre (Cuenta)
+CuentaAhorro::CuentaAhorro(string _nombre, float _saldo, int _noCuenta, float _interes, float _saldoMinimo) : Cuenta(_nombre, _saldo, _noCuenta){ // Heredamos el nombre, edad, saldo y número de cuenta de la clase padre (Cuenta)
   interes = _interes;
   saldoMinimo = _saldoMinimo;
+}
+
+void CuentaAhorro::mostrarCuenta(){ // Se muestra diferente que la clase padre
+  cout << "Cliente: " << cliente.getNombre() << endl;
+  cout << "Saldo: " << saldo << endl;
+  cout << "Número de cuenta: " << noCuenta << endl;
+  cout << "Tasa de interés anual: " << (interes*100) << endl;
+  cout << "Saldo mínimo: " << saldoMinimo << endl;
 }
 
 void CuentaAhorro::retirar(float cantidad){ // Declaramos la función retirar para la clase CuentaAhorro
@@ -99,9 +115,10 @@ class CuentaCredito : public Cuenta{ // Creamos una clase hija (CuentaCredito)
     float limCredito;
   public:
     CuentaCredito(); // Constructor default
-    CuentaCredito(string, int, float, int, float); // Constructor con sobre carga
-    setLimCredito(float);
-    getLimCredito();
+    CuentaCredito(string, float, int, float); // Constructor con sobre carga
+    void mostrarCuenta();
+    void setLimCredito(float);
+    float getLimCredito();
     void usarTarjeta(float);
     void pagarTarjeta();
 };
@@ -109,9 +126,17 @@ class CuentaCredito : public Cuenta{ // Creamos una clase hija (CuentaCredito)
 CuentaCredito::CuentaCredito(){
 }
 
-CuentaCredito::CuentaCredito(string _nombre, int _edad, float _saldo, int _noCuenta, float _credito) : Cuenta(_nombre, _edad, _saldo, _noCuenta){
+CuentaCredito::CuentaCredito(string _nombre, float _saldo, int _noCuenta, float _credito) : Cuenta(_nombre, _saldo, _noCuenta){
   credito = _credito;
   limCredito = _credito;
+}
+
+void CuentaCredito::mostrarCuenta(){ // Se muestra diferente que la clase padre
+  cout << "Cliente: " << cliente.getNombre() << endl;
+  cout << "Saldo: " << saldo << endl;
+  cout << "Número de cuenta: " << noCuenta << endl;
+  cout << "Límite de crédito: " << limCredito << endl;
+  cout << "Crédito diponible: " << credito << endl;
 }
 
 void CuentaCredito::setLimCredito(float _limCredito){
@@ -123,7 +148,7 @@ float CuentaCredito::getLimCredito(){
 }
 
 void CuentaCredito::usarTarjeta(float cantidad){
-  if (credito-cantidad) >= 0{
+  if ((credito - cantidad) >= 0){
     credito = credito - cantidad;
   }
   else{
