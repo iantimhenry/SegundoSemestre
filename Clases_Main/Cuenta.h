@@ -7,7 +7,7 @@ using namespace std;
 
 #include "Cliente.h"
 
-class Cuenta{ // Creamos la clase padre (Cuenta) 
+class Cuenta{ // Creamos la clase padre abstracta (Cuenta) 
   protected:
     Cliente cliente; // Composición 
     float saldo;
@@ -15,12 +15,11 @@ class Cuenta{ // Creamos la clase padre (Cuenta)
   public:
     Cuenta(); // Constructor default
     Cuenta(string, float, int); // Constructor con sobre carga
-    virtual void mostrarCuenta(); // Método vitrtual, para polimorfismo
-    virtual void retirar(float); // Método vitrtual, para polimorfismo
+    virtual void mostrarCuenta() = 0; // Método vitrtual, para polimorfismo (Clase abstracta)
+    virtual void retirar(float) = 0; // Método vitrtual, para polimorfismo (Clase abstracta)
     void depositar(float);
     void setNoCuenta(int);
     int getNoCuenta();
-    
 };
 
 Cuenta::Cuenta(){
@@ -31,18 +30,9 @@ Cuenta::Cuenta(string _nombre, float _saldo, int _noCuenta) : cliente(_nombre){ 
   noCuenta = _noCuenta;
 }
 
-void Cuenta::mostrarCuenta(){
-  cout << "Cliente: " << cliente.getNombre() << endl;
-  cout << "Saldo: " << saldo << endl;
-  cout << "Número de cuenta: " << noCuenta << endl;
-}
-
-void Cuenta::retirar(float cantidad){
-  saldo = saldo - cantidad;
-}
-
 void Cuenta::depositar(float cantidad){
   saldo = saldo + cantidad;
+  cout << "Saldo actual: " << saldo << endl;
 }
 
 void Cuenta::setNoCuenta(int _noCuenta){
@@ -60,8 +50,8 @@ class CuentaAhorro : public Cuenta{ // Creamos una clase hija (CuentaAhorro)
   public:
     CuentaAhorro(); // Constructor default
     CuentaAhorro(string, float, int, float, float); // Constructor con sobre carga
-    void mostrarCuenta(); // Sobreescritura
-    void retirar(float); // Sobreescritura
+    void mostrarCuenta(); // Sobreescritura/Metodos virtual
+    void retirar(float); // Sobreescritura/Metodos virtual
     void setInteres(float);
     void setSaldoMinimo(float);
     float getInteres();
@@ -76,7 +66,7 @@ CuentaAhorro::CuentaAhorro(string _nombre, float _saldo, int _noCuenta, float _i
   saldoMinimo = _saldoMinimo;
 }
 
-void CuentaAhorro::mostrarCuenta(){ // Se muestra diferente que la clase padre
+void CuentaAhorro::mostrarCuenta(){ // Se muestra diferente que la clase CuentaCredito
   cout << "Cliente: " << cliente.getNombre() << endl;
   cout << "Saldo: " << saldo << endl;
   cout << "Número de cuenta: " << noCuenta << endl;
@@ -91,6 +81,7 @@ void CuentaAhorro::retirar(float cantidad){ // Declaramos la función retirar pa
   else {
     cout << "No es posible retirar esa cantidad, no hay saldo suficiente"<<endl;
   }
+  cout << "Saldo Actual: " << saldo << endl;
 }
 
 void CuentaAhorro::setInteres(float _interes){
@@ -116,7 +107,8 @@ class CuentaCredito : public Cuenta{ // Creamos una clase hija (CuentaCredito)
   public:
     CuentaCredito(); // Constructor default
     CuentaCredito(string, float, int, float); // Constructor con sobre carga
-    void mostrarCuenta();
+    void mostrarCuenta(); //Sobreescritura/Metodos virtual
+    void retirar(float); //Sobreescritura/Metodos virtual
     void setLimCredito(float);
     float getLimCredito();
     void usarTarjeta(float);
@@ -126,17 +118,22 @@ class CuentaCredito : public Cuenta{ // Creamos una clase hija (CuentaCredito)
 CuentaCredito::CuentaCredito(){
 }
 
-CuentaCredito::CuentaCredito(string _nombre, float _saldo, int _noCuenta, float _credito) : Cuenta(_nombre, _saldo, _noCuenta){
+CuentaCredito::CuentaCredito(string _nombre, float _saldo, int _noCuenta, float _credito) : Cuenta(_nombre, _saldo, _noCuenta){ // Heredamos el nombre, edad, saldo y número de cuenta de la clase padre (Cuenta)
   credito = _credito;
   limCredito = _credito;
 }
 
-void CuentaCredito::mostrarCuenta(){ // Se muestra diferente que la clase padre
+void CuentaCredito::mostrarCuenta(){ // Se muestra diferente que la clase CuentaAhorro
   cout << "Cliente: " << cliente.getNombre() << endl;
   cout << "Saldo: " << saldo << endl;
   cout << "Número de cuenta: " << noCuenta << endl;
   cout << "Límite de crédito: " << limCredito << endl;
   cout << "Crédito diponible: " << credito << endl;
+}
+
+void CuentaCredito::retirar(float cantidad){
+  saldo = saldo - cantidad;
+  cout << "Saldo actual: " << saldo << endl;
 }
 
 void CuentaCredito::setLimCredito(float _limCredito){
@@ -152,14 +149,16 @@ void CuentaCredito::usarTarjeta(float cantidad){
     credito = credito - cantidad;
   }
   else{
-    cout << "No hay crédito suficiente"
+    cout << "No hay crédito suficiente " << endl;
   }
+  cout << "Credito restante: " << credito << endl;
 }
 
 void CuentaCredito::pagarTarjeta(){
   float monto = limCredito - credito;
   credito = limCredito;
   saldo = saldo - monto;
+  cout << "Saldo actual: " << saldo << endl;
 }
 
 #endif
