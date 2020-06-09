@@ -1,3 +1,9 @@
+/*
+Proyecto Segundo Semestre
+Ian Timothy Henry Suárez
+A01701578
+*/
+
 #ifndef CLIENTE_H_
 #define CLIENTE_H_
 
@@ -6,9 +12,11 @@
 using namespace std;
 
 class Cliente{ // Creamos la cuenta cliente 
-  private:
+  
+  private: //Atributos
     string nombre;
-  public:
+  
+  public: //Métodos
     Cliente(); // Constructor default
     Cliente(string); // Constructor con sobrecarga
     void setNombre(string);
@@ -18,12 +26,15 @@ class Cliente{ // Creamos la cuenta cliente
 Cliente::Cliente(){
 }
 
-Cliente::Cliente(string _nombre){
-  nombre = _nombre;
+Cliente::Cliente(string t_nombre){
+  nombre = t_nombre;
 }
 
-void Cliente::setNombre(string _nombre){
-  nombre = _nombre;
+/*
+Métodos de acceso
+*/
+void Cliente::setNombre(string t_nombre){
+  nombre = t_nombre;
 }
 
 string Cliente::getNombre(){
