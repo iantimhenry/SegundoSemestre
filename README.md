@@ -11,7 +11,7 @@ El ejecutivo puede visualizar la base de datos, agregar cuentas o eliminarlas. E
 # Recomendaciones
 
 - Comenzar a usar como ejecutivo. De esta forma se podrán crear las primeras cuentas. Posteriormente, los clientes podran acceder a sus cuentas. 
-- No usar dos codigos de cuentas iguales. De lo contrario las funciones que quieran usarse en una cuenta se utilizarán también en una cuenta que no se desea modificar. 
+- No usar dos codigos de cliente iguales. De lo contrario las funciones que quieran usarse en una cuenta se utilizarán también en una cuenta que no se desea modificar. 
 
 # Caso de prueba 
 2, 1, 2, Javier, 1000, 123, 20000, 2, 1, 1, Renata, 10000, 321, 0.06, 1000, 2, 3, 1, 123, 1, 100, 1, 123, 2, 100, 1, 123, 3, 100, 1, 123, 2, 100, 1, 123, 4, 1, 321, 1, 100, 1, 321, 2, 100, 2, 3, 2, 2, 123, 2, 321, 2, 3, 4. 
